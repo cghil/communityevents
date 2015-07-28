@@ -14,6 +14,8 @@ var config = require('./config'),
     helmet = require('helmet'),
     csrf = require('csurf');
 
+require('dotenv').load();
+
 //create express app
 var app = express();
 
