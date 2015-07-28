@@ -28,6 +28,7 @@ exports.find = function(req, res, next){
       res.send(results);
     }
     else {
+    	// results.data is everything that we are searching for
       results.filters = req.query;
       res.render('events/index', { data: results.data });
     }
