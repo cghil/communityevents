@@ -28,8 +28,37 @@ exports.find = function(req, res, next){
       res.send(results);
     }
     else {
+    	// results.data is everything that we are searching for
       results.filters = req.query;
       res.render('events/index', { data: results.data });
     }
   });
 };
+
+exports.read = function(req, res, next){
+	req.app.db.models.Event.findById(req.params.id).exec(function(err, event){
+		if(err){
+			return next(err)
+		}
+
+		if (req.xhr){
+			res.send(event)
+		} else {
+			res.render('events/details', { event: event })
+		}
+	})
+};
+
+exports.add = function(req, res){
+  if (!req.isAuthenticated()) {
+    req.flash("error", "You are not logged in");
+      res.location('/events');
+      res.redirect("/events");
+  }
+  res.render('events/add');
+};
+
+// exports.create = function(req, res, next){
+//   var workflow = 
+// }
+
